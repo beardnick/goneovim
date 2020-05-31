@@ -34,7 +34,7 @@ jobs:
       if: matrix.platform == 'ubuntu-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.13.2
+        version: 5.12.8
         host: linux
         target: desktop
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
