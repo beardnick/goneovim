@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     env:
       GOPATH: ${{ github.workspace }}
-      QT_VERSION: 5.12.7
+      QT_VERSION: 5.12.8
       GO111MODULE: off
     steps:
     - name: Linux prerequisites 
@@ -35,7 +35,7 @@ jobs:
       if: matrix.platform == 'ubuntu-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.7
+        version: 5.12.8
         host: linux
         target: desktop
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
@@ -44,7 +44,7 @@ jobs:
       if: matrix.platform == 'macos-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.7
+        version: 5.12.8
         host: mac
         target: desktop
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
@@ -63,6 +63,10 @@ jobs:
         sudo swapoff -a
         sudo rm -f /swapfile
         sudo apt clean
+
+    - name: Check dir
+      run: |
+        tree .
 
     - name: Generate Qt bindings
       run: $(go env GOPATH)/bin/qtsetup
@@ -138,7 +142,7 @@ jobs:
       GOROOT_FINAL: ${{ github.workspace }}\go-boot
       GOVSVARSPATH: ${{ github.workspace }}\BuildTools\VC\Auxiliary\Build\vcvars64.bat
       CGO_ENABLED: 0
-      QT_VERSION: 5.12.7
+      QT_VERSION: 5.12.8
       QT_DIR: ${{ github.workspace }}\Qt
       QT_MSVC: true
       GO111MODULE: off
@@ -167,7 +171,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.7
+        version: 5.12.8
         host: windows
         target: desktop
         dir: ${{ github.workspace }}
@@ -253,9 +257,7 @@ jobs:
       run: |
         echo %PATH%
         dir ${{ github.workspace }}\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64
-        ${{ github.workspace }}\bin\qtsetup.exe prep
-        ${{ github.workspace }}\bin\qtsetup.exe check
-        ${{ github.workspace }}\bin\qtsetup.exe generate
+        ${{ github.workspace }}\bin\qtsetup.exe
       shell: cmd
 
     - name: Retrieving dependencies
