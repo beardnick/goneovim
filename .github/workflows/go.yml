@@ -11,7 +11,7 @@ jobs:
     env:
       GOPATH: ${{ github.workspace }}
       QT_VERSION: 5.12.8
-      QT_DIR: ${{ github.workspace }}\Qt
+      QT_DIR: ${{ github.workspace }}/Qt
       GO111MODULE: off
     steps:
     - name: Linux prerequisites 
@@ -67,7 +67,7 @@ jobs:
 
     - name: Check dir
       run: |
-        ls -lR ${{ github.workspace }}\Qt
+        ls -lR ${{ github.workspace }}/Qt
 
     - name: Generate Qt bindings
       run: $(go env GOPATH)/bin/qtsetup
