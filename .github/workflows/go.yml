@@ -10,6 +10,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     env:
       GOPATH: ${{ github.workspace }}
+      QT_VERSION: 5.12.8
       GO111MODULE: off
     steps:
     - name: Linux prerequisites 
@@ -137,7 +138,7 @@ jobs:
       GOROOT_FINAL: ${{ github.workspace }}\go-boot
       GOVSVARSPATH: ${{ github.workspace }}\BuildTools\VC\Auxiliary\Build\vcvars64.bat
       CGO_ENABLED: 0
-      QT_VERSION: 5.12.6
+      QT_VERSION: 5.12.8
       QT_DIR: ${{ github.workspace }}\Qt
       QT_MSVC: true
       GO111MODULE: off
