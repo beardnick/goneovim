@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     env:
       GOPATH: ${{ github.workspace }}
-      QT_VERSION: 5.12.8
+      QT_VERSION: 5.12.7
       QT_DIR: ${{ github.workspace }}/Qt
       GO111MODULE: off
     steps:
@@ -36,7 +36,7 @@ jobs:
       if: matrix.platform == 'ubuntu-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.8
+        version: 5.12.7
         host: linux
         target: desktop
         dir: ${{ github.workspace }}
@@ -46,7 +46,7 @@ jobs:
       if: matrix.platform == 'macos-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.8
+        version: 5.12.7
         host: mac
         target: desktop
         dir: ${{ github.workspace }}
@@ -145,7 +145,7 @@ jobs:
       GOROOT_FINAL: ${{ github.workspace }}\go-boot
       GOVSVARSPATH: ${{ github.workspace }}\BuildTools\VC\Auxiliary\Build\vcvars64.bat
       CGO_ENABLED: 0
-      QT_VERSION: 5.12.8
+      QT_VERSION: 5.12.7
       QT_DIR: ${{ github.workspace }}\Qt
       QT_MSVC: true
       GO111MODULE: off
@@ -174,7 +174,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.8
+        version: 5.12.7
         host: windows
         target: desktop
         dir: ${{ github.workspace }}
