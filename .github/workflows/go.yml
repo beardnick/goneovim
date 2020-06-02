@@ -66,9 +66,15 @@ jobs:
         sudo swapoff -a
         sudo rm -f /swapfile
         sudo apt clean
+    
+    - name: Checkout Old bindings for QtWebEngineProcess
+      run: |
+        cd ${{ github.workspace }}\src\github.com\therecipe\qt
+        git checkout 0aa6d6dc1
+        $(go env GOPATH)/bin/qtsetup install
 
     - name: Generate Qt bindings
-      run: $(go env GOPATH)/bin/qtsetup full
+      run: $(go env GOPATH)/bin/qtsetup
 
     - name: Get dependencies
       run: |
@@ -197,30 +203,31 @@ jobs:
         $env:PATH = "${{ github.workspace }}\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64;$env:PATH"
         echo "::set-env name=PATH::$env:PATH"
 
-    # - name: Get Old Qt binding for Go
-    #   run: |
-    #     Move-Item -Path ${{ github.workspace }}\bin\qtdeploy.exe  -Destination ${{ github.workspace }}\bin\qtdeploy.exe.old  -Force
-    #     Move-Item -Path ${{ github.workspace }}\bin\qtminimal.exe -Destination ${{ github.workspace }}\bin\qtminimal.exe.old -Force
-    #     Move-Item -Path ${{ github.workspace }}\bin\qtmoc.exe     -Destination ${{ github.workspace }}\bin\qtmoc.exe.old     -Force
-    #     Move-Item -Path ${{ github.workspace }}\bin\qtrcc.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe.old     -Force
-    #     Move-Item -Path ${{ github.workspace }}\bin\qtsetup.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe.old   -Force
-    #     cd ${{ github.workspace }}\src\github.com\therecipe\qt
-    #     git checkout 47559b8cf
-    #     cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy
-    #     go build main.go
-    #     Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy\main.exe  -Destination ${{ github.workspace }}\bin\qtdeploy.exe -Force
-    #     cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtminimal
-    #     go build main.go
-    #     Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtminimal\main.exe -Destination ${{ github.workspace }}\bin\qtminimal.exe -Force
-    #     cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtmoc
-    #     go build main.go
-    #     Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtmoc\main.exe     -Destination ${{ github.workspace }}\bin\qtmoc.exe -Force
-    #     cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtrcc
-    #     go build main.go
-    #     Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtrcc\main.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe -Force
-    #     cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtsetup
-    #     go build main.go
-    #     Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtsetup\main.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe -Force
+    - name: Get Old Qt binding for Go
+      run: |
+        Move-Item -Path ${{ github.workspace }}\bin\qtdeploy.exe  -Destination ${{ github.workspace }}\bin\qtdeploy.exe.old  -Force
+        Move-Item -Path ${{ github.workspace }}\bin\qtminimal.exe -Destination ${{ github.workspace }}\bin\qtminimal.exe.old -Force
+        Move-Item -Path ${{ github.workspace }}\bin\qtmoc.exe     -Destination ${{ github.workspace }}\bin\qtmoc.exe.old     -Force
+        Move-Item -Path ${{ github.workspace }}\bin\qtrcc.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe.old     -Force
+        Move-Item -Path ${{ github.workspace }}\bin\qtsetup.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe.old   -Force
+        cd ${{ github.workspace }}\src\github.com\therecipe\qt
+        git checkout 0aa6d6dc1
+        ${{ github.workspace }}\bin\qtsetup.exe install
+        # cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy
+        # go build main.go
+        # Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy\main.exe  -Destination ${{ github.workspace }}\bin\qtdeploy.exe -Force
+        # cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtminimal
+        # go build main.go
+        # Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtminimal\main.exe -Destination ${{ github.workspace }}\bin\qtminimal.exe -Force
+        # cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtmoc
+        # go build main.go
+        # Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtmoc\main.exe     -Destination ${{ github.workspace }}\bin\qtmoc.exe -Force
+        # cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtrcc
+        # go build main.go
+        # Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtrcc\main.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe -Force
+        # cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtsetup
+        # go build main.go
+        # Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtsetup\main.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe -Force
 
     - name: Enable experimental Go features Step.1
       continue-on-error: true
@@ -256,7 +263,7 @@ jobs:
       run: |
         echo %PATH%
         dir ${{ github.workspace }}\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64
-        ${{ github.workspace }}\bin\qtsetup.exe full
+        ${{ github.workspace }}\bin\qtsetup.exe
       shell: cmd
 
     - name: Retrieving dependencies
