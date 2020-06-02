@@ -69,7 +69,7 @@ jobs:
     
     - name: Checkout Old bindings for QtWebEngineProcess
       run: |
-        cd ${{ github.workspace }}\src\github.com\therecipe\qt
+        cd ${{ github.workspace }}/src/github.com/therecipe/qt
         git checkout 0aa6d6dc1
         $(go env GOPATH)/bin/qtsetup install
 
