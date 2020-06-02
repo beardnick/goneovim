@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         # go-version: [1.12.x, 1.13.x]
-        go-version: [1.13.x]
+        go-version: [1.12.x]
         platform: [ubuntu-latest, macos-latest] #, windows-latest]
     runs-on: ${{ matrix.platform }}
     env:
@@ -75,7 +75,7 @@ jobs:
         mv ${{ github.workspace }}/bin/qtrcc     ${{ github.workspace }}/bin/qtrcc.mv
         mv ${{ github.workspace }}/bin/qtsetup   ${{ github.workspace }}/bin/qtsetup.mv
         cd ${{ github.workspace }}/src/github.com/therecipe/qt
-        git checkout 79e83fbcfd0
+        git checkout a29105c9a88
         cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy
         go build main.go
         mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy/main ${{ github.workspace }}/bin/qtdeploy
@@ -94,6 +94,8 @@ jobs:
 
 
     - name: Generate Qt bindings
+      env: 
+        GO111MODULE: off
       run: $(go env GOPATH)/bin/qtsetup
 
     - name: Get dependencies
@@ -231,7 +233,7 @@ jobs:
         Move-Item -Path ${{ github.workspace }}\bin\qtrcc.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe.old     -Force
         Move-Item -Path ${{ github.workspace }}\bin\qtsetup.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe.old   -Force
         cd ${{ github.workspace }}\src\github.com\therecipe\qt
-        git checkout 79e83fbcfd0
+        git checkout a29105c9a88
         cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy
         go build main.go
         Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy\main.exe  -Destination ${{ github.workspace }}\bin\qtdeploy.exe -Force
@@ -279,6 +281,8 @@ jobs:
         .\make.bat
 
     - name: Generate Qt bindings
+      env: 
+        GO111MODULE: off
       run: |
         echo %PATH%
         dir ${{ github.workspace }}\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64
