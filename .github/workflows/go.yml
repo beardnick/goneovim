@@ -13,6 +13,7 @@ jobs:
       QT_VERSION: 5.12.8
       QT_DIR: ${{ github.workspace }}/Qt
       GO111MODULE: off
+      GOPROXY: https://goproxy.io
     steps:
     - name: Linux prerequisites 
       if: matrix.platform == 'ubuntu-latest'
@@ -52,8 +53,25 @@ jobs:
         dir: ${{ github.workspace }}
         # cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
-    - name: Get Qt binding for Go
-      run: go get -v github.com/therecipe/qt/cmd/...
+    - name: Get Qt binding for Go for linux
+      if: matrix.platform == 'ubuntu-latest'
+      env:
+        GO111MODULE: on
+      run: 
+      go get -v github.com/therecipe/qt
+      go install -v -tags=no_env github.com/therecipe/qt/cmd/...
+      go mod vendor
+      git clone https://github.com/therecipe/env_linux_amd64_512.git vendor/github.com/therecipe/env_linux_amd64_512
+
+    - name: Get Qt binding for Go for macOS
+      if: matrix.platform == 'macos-latest'
+      env:
+        GO111MODULE: on
+      run: 
+      go get -v github.com/therecipe/qt
+      go install -v -tags=no_env github.com/therecipe/qt/cmd/...
+      go mod vendor
+      git clone https://github.com/therecipe/env_darwin_amd64_512.git vendor/github.com/therecipe/env_darwin_amd64_512
 
     - name: Checkout code
       uses: actions/checkout@v2
@@ -96,8 +114,6 @@ jobs:
 
 
     - name: Generate Qt bindings
-      env: 
-        GO111MODULE: off
       run: $(go env GOPATH)/bin/qtsetup -test=false
 
     - name: Get dependencies
