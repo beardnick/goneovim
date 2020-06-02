@@ -75,7 +75,7 @@ jobs:
         mv ${{ github.workspace }}/bin/qtrcc     ${{ github.workspace }}/bin/qtrcc.mv
         mv ${{ github.workspace }}/bin/qtsetup   ${{ github.workspace }}/bin/qtsetup.mv
         cd ${{ github.workspace }}/src/github.com/therecipe/qt
-        git checkout 0aa6d6dc1
+        git checkout 79e83fbcfd0
         cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy
         go build main.go
         mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy/main ${{ github.workspace }}/bin/qtdeploy
@@ -231,7 +231,7 @@ jobs:
         Move-Item -Path ${{ github.workspace }}\bin\qtrcc.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe.old     -Force
         Move-Item -Path ${{ github.workspace }}\bin\qtsetup.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe.old   -Force
         cd ${{ github.workspace }}\src\github.com\therecipe\qt
-        git checkout 0aa6d6dc1
+        git checkout 79e83fbcfd0
         cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy
         go build main.go
         Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy\main.exe  -Destination ${{ github.workspace }}\bin\qtdeploy.exe -Force
