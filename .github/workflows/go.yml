@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     env:
       GOPATH: ${{ github.workspace }}
-      QT_VERSION: 5.12.6
+      QT_VERSION: 5.12.8
       QT_DIR: ${{ github.workspace }}/Qt
       GO111MODULE: off
     steps:
@@ -36,7 +36,7 @@ jobs:
       if: matrix.platform == 'ubuntu-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.6
+        version: 5.12.8
         host: linux
         target: desktop
         dir: ${{ github.workspace }}
@@ -46,13 +46,15 @@ jobs:
       if: matrix.platform == 'macos-latest'
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.6
+        version: 5.12.8
         host: mac
         target: desktop
         dir: ${{ github.workspace }}
         # cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
     - name: Get Qt binding for Go
+      env: 
+        GO111MODULE: off
       run: go get -v github.com/therecipe/qt/cmd/...
 
     - name: Checkout code
@@ -171,7 +173,7 @@ jobs:
       GOROOT_FINAL: ${{ github.workspace }}\go-boot
       GOVSVARSPATH: ${{ github.workspace }}\BuildTools\VC\Auxiliary\Build\vcvars64.bat
       CGO_ENABLED: 0
-      QT_VERSION: 5.12.6
+      QT_VERSION: 5.12.8
       QT_DIR: ${{ github.workspace }}\Qt
       QT_MSVC: true
       GO111MODULE: off
@@ -200,7 +202,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: 5.12.6
+        version: 5.12.8
         host: windows
         target: desktop
         dir: ${{ github.workspace }}
