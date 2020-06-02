@@ -74,6 +74,8 @@ jobs:
         mv ${{ github.workspace }}/bin/qtmoc     ${{ github.workspace }}/bin/qtmoc.mv
         mv ${{ github.workspace }}/bin/qtrcc     ${{ github.workspace }}/bin/qtrcc.mv
         mv ${{ github.workspace }}/bin/qtsetup   ${{ github.workspace }}/bin/qtsetup.mv
+        cd ${{ github.workspace }}/src/github.com/sirupsen/logrus
+        git checkout b70d15e20
         cd ${{ github.workspace }}/src/github.com/therecipe/qt
         git checkout 4ee12d6ea
         cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy
@@ -91,8 +93,6 @@ jobs:
         cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtsetup
         go build main.go
         mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtsetup/main ${{ github.workspace }}/bin/qtsetup
-        cd ${{ github.workspace }}/src/github.com/sirupsen/logrus
-        git checkout b70d15e20
 
 
     - name: Generate Qt bindings
@@ -234,6 +234,8 @@ jobs:
         Move-Item -Path ${{ github.workspace }}\bin\qtmoc.exe     -Destination ${{ github.workspace }}\bin\qtmoc.exe.old     -Force
         Move-Item -Path ${{ github.workspace }}\bin\qtrcc.exe     -Destination ${{ github.workspace }}\bin\qtrcc.exe.old     -Force
         Move-Item -Path ${{ github.workspace }}\bin\qtsetup.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe.old   -Force
+        cd ${{ github.workspace }}\src\github.com\sirupsen\logrus
+        git checkout b70d15e20
         cd ${{ github.workspace }}\src\github.com\therecipe\qt
         git checkout 4ee12d6ea
         cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtdeploy
@@ -251,8 +253,6 @@ jobs:
         cd ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtsetup
         go build main.go
         Move-Item -Path ${{ github.workspace }}\src\github.com\therecipe\qt\cmd\qtsetup\main.exe   -Destination ${{ github.workspace }}\bin\qtsetup.exe -Force
-        cd ${{ github.workspace }}\src\github.com\sirupsen\logrus
-        git checkout b70d15e20
 
     - name: Enable experimental Go features Step.1
       continue-on-error: true
