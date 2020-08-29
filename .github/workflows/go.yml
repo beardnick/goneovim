@@ -61,7 +61,7 @@ jobs:
 
     - name: Check bindings
       run: |
-        cd ./src/github.com/${{ github.repository }}
+        cd ./src/github.com/therecipe/qt
         git rev-parse HEAD
     
     # - name: Checkout Old bindings 
