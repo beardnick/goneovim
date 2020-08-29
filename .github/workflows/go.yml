@@ -58,9 +58,12 @@ jobs:
         sudo swapoff -a
         sudo rm -f /swapfile
         sudo apt clean
+
+    - name: Check bindings: |
+        cd ./src/github.com/${{ github.repository }}
+        git rev-parse HEAD
     
-    # - name: Checkout Old bindings
-    #   run: |
+    # - name: Checkout Old bindings run: |
     #     mv ${{ github.workspace }}/bin/qtdeploy  ${{ github.workspace }}/bin/qtdeploy.mv
     #     mv ${{ github.workspace }}/bin/qtminimal ${{ github.workspace }}/bin/qtminimal.mv
     #     mv ${{ github.workspace }}/bin/qtmoc     ${{ github.workspace }}/bin/qtmoc.mv
