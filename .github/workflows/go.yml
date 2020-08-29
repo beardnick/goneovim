@@ -59,7 +59,7 @@ jobs:
         sudo rm -f /swapfile
         sudo apt clean
 
-    - name: Check bindings: 
+    - name: Check bindings
       run: |
         cd ./src/github.com/${{ github.repository }}
         git rev-parse HEAD
