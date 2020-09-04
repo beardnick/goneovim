@@ -11,9 +11,9 @@ jobs:
     env:
       GOPATH: ${{ github.workspace }}
       QT_VERSION: 5.12.8
-      QT_DIR: ${{ github.workspace }}/Qt
+      QT_API: 5.12.0
       GO111MODULE: off
-      GOPROXY: off
+      GOPROXY: https://goproxy.io
     steps:
     - name: Linux prerequisites 
       if: matrix.platform == 'ubuntu-latest'
@@ -33,7 +33,6 @@ jobs:
         version: 5.12.8
         host: linux
         target: desktop
-        dir: ${{ github.workspace }}
 
     - name: Install Qt for macOS
       if: matrix.platform == 'macos-latest'
@@ -42,10 +41,9 @@ jobs:
         version: 5.12.8
         host: mac
         target: desktop
-        dir: ${{ github.workspace }}
 
     - name: Get Qt binding for Go
-      run: go get -v github.com/therecipe/qt/cmd/...
+      run: go get -tags=no_env -v github.com/therecipe/qt/cmd/...
 
     - name: Checkout code
       uses: actions/checkout@v2
@@ -58,42 +56,9 @@ jobs:
         sudo swapoff -a
         sudo rm -f /swapfile
         sudo apt clean
-
-    - name: Check bindings
-      run: |
-        cd ./src/github.com/therecipe/qt
-        git rev-parse HEAD
-    
-    # - name: Checkout Old bindings 
-    #   run: |
-    #     mv ${{ github.workspace }}/bin/qtdeploy  ${{ github.workspace }}/bin/qtdeploy.mv
-    #     mv ${{ github.workspace }}/bin/qtminimal ${{ github.workspace }}/bin/qtminimal.mv
-    #     mv ${{ github.workspace }}/bin/qtmoc     ${{ github.workspace }}/bin/qtmoc.mv
-    #     mv ${{ github.workspace }}/bin/qtrcc     ${{ github.workspace }}/bin/qtrcc.mv
-    #     mv ${{ github.workspace }}/bin/qtsetup   ${{ github.workspace }}/bin/qtsetup.mv
-    #     cd ${{ github.workspace }}/src/github.com/sirupsen/logrus
-    #     git checkout b70d15e20
-    #     cd ${{ github.workspace }}/src/github.com/therecipe/qt
-    #     git checkout 4ee12d6ea
-    #     cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy
-    #     go build main.go
-    #     mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtdeploy/main ${{ github.workspace }}/bin/qtdeploy
-    #     cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtminimal
-    #     go build main.go
-    #     mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtminimal/main ${{ github.workspace }}/bin/qtminimal
-    #     cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtmoc
-    #     go build main.go
-    #     mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtmoc/main ${{ github.workspace }}/bin/qtmoc
-    #     cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtrcc
-    #     go build main.go
-    #     mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtrcc/main ${{ github.workspace }}/bin/qtrcc
-    #     cd ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtsetup
-    #     go build main.go
-    #     mv ${{ github.workspace }}/src/github.com/therecipe/qt/cmd/qtsetup/main ${{ github.workspace }}/bin/qtsetup
-
-
+  
     - name: Generate Qt bindings
-      run: $(go env GOPATH)/bin/qtsetup
+      run: CI=false $(go env GOPATH)/bin/qtsetup
 
     - name: Get dependencies
       run: |
@@ -167,11 +132,13 @@ jobs:
       GOROOT_FINAL: ${{ github.workspace }}\go-boot
       GOVSVARSPATH: ${{ github.workspace }}\BuildTools\VC\Auxiliary\Build\vcvars64.bat
       CGO_ENABLED: 0
+      QT_API: 5.12.0
       QT_VERSION: 5.12.8
       QT_DIR: ${{ github.workspace }}\Qt
       QT_MSVC: true
       GO111MODULE: off
     steps:
+
 
     - name: Intall MSVC 2017 Visual C++ Buildtools
       run : |
@@ -193,7 +160,7 @@ jobs:
         dir ${{ github.workspace }}\BuildTools\VC\Tools\MSVC\14.16.27023\bin\Hostx64\x64
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.7.1
+      uses: jurplel/install-qt-action@v2
       with:
         version: 5.12.8
         host: windows
@@ -280,7 +247,7 @@ jobs:
         .\make.bat
 
     - name: Generate Qt bindings
-      run: ${{ github.workspace }}\bin\qtsetup.exe
+      run: ${{ github.workspace }}\bin\qtsetup.exe -test=false
       shell: cmd
 
     - name: Retrieving dependencies
@@ -323,4 +290,3 @@ jobs:
       with:
         name: Goneovim-latest-win64
         path: ${{ github.workspace }}/src/github.com/${{ github.repository }}/cmd/goneovim/deploy/windows
-
