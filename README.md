@@ -1,10 +1,10 @@
-<img src="https://raw.githubusercontent.com/wiki/akiyosi/goneovim/images/GoNeovim.png" width="250" align="top" >
+<img src="https://raw.githubusercontent.com/wiki/beardnick/goneovim/images/GoNeovim.png" width="250" align="top" >
 
 ---
 
-![test](https://github.com/akiyosi/goneovim/workflows/test/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/akiyosi/goneovim)](https://goreportcard.com/report/github.com/akiyosi/goneovim)
-![GitHub Releases](https://img.shields.io/github/downloads/akiyosi/goneovim/v0.4.6/total)
+![test](https://github.com/beardnick/goneovim/workflows/test/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/beardnick/goneovim)](https://goreportcard.com/report/github.com/beardnick/goneovim)
+![GitHub Releases](https://img.shields.io/github/downloads/beardnick/goneovim/v0.4.6/total)
 [![Join the chat at https://gitter.im/goneovim/community](https://badges.gitter.im/goneovim/community.svg)](https://gitter.im/goneovim/community)
 
 *GoNeovim* is a Neovim GUI written in Go, using a [Qt binding for Go](https://github.com/therecipe/qt).
@@ -46,20 +46,20 @@ All of the features are optional. You can use it like a plain nvim or as a nvim 
 ## Screenshots
 
 * Workspaces, external file explorer
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/workspaces-fileexplorer.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/workspaces-fileexplorer.png)
 * Fuzzy Finder
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/fuzzyfinder.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/fuzzyfinder.png)
 * Markdown preview
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/markdown-preview.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/markdown-preview.png)
 * Minimap
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/minimap.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/minimap.png)
 * Indentguide, display ligatures(Fira Code)
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/indentguide.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/indentguide.png)
 * Transparent app window, Transparent message window
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/transparent.png)
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/transparent-message.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/transparent.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/transparent-message.png)
 * Independent font settings per window
-![](https://raw.githubusercontent.com/wiki/akiyosi/goneovim/screenshots/font-setting-per-window.png)
+![](https://raw.githubusercontent.com/wiki/beardnick/goneovim/screenshots/font-setting-per-window.png)
 
 ## Requirements
 * Neovim (v0.4.3 or later)
@@ -67,13 +67,13 @@ All of the features are optional. You can use it like a plain nvim or as a nvim 
 See [Installing Neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
 ## Getting Started
-Pre-built packages for Windows, MacOS, and Linux are found at the [Releases](https://github.com/akiyosi/goneovim/releases) page.
+Pre-built packages for Windows, MacOS, and Linux are found at the [Releases](https://github.com/beardnick/goneovim/releases) page.
 
 
 
 ## Usage
 
-See [wiki](https://github.com/akiyosi/goneovim/wiki/Usage)
+See [wiki](https://github.com/beardnick/goneovim/wiki/Usage)
 
 
 ## ToDo
@@ -98,7 +98,7 @@ In the current implementation, it is not possible to highlight the keyword being
 
 ## Development
 
-* [Development](https://github.com/akiyosi/goneovim/wiki/Development)
+* [Development](https://github.com/beardnick/goneovim/wiki/Development)
 
 
 ## Similar projects

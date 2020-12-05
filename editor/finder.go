@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/akiyosi/goneovim/util"
+	"github.com/beardnick/goneovim/util"
 )
 
 // Finder is a fuzzy finder window

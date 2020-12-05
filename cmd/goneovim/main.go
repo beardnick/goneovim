@@ -4,7 +4,7 @@ import (
 	// "net/http"
 	// _ "net/http/pprof"
 
-	"github.com/akiyosi/goneovim/editor"
+	"github.com/beardnick/goneovim/editor"
 )
 
 func main() {

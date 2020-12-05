@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/akiyosi/goneovim/util"
+	"github.com/beardnick/goneovim/util"
 	"github.com/bluele/gcache"
 	"github.com/neovim/go-client/nvim"
 	"github.com/therecipe/qt/core"

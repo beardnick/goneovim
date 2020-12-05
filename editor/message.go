@@ -11,7 +11,7 @@ import (
 	"github.com/therecipe/qt/svg"
 	"github.com/therecipe/qt/widgets"
 
-	"github.com/akiyosi/goneovim/util"
+	"github.com/beardnick/goneovim/util"
 )
 
 const DummyText = "dummy text"

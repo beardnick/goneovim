@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/akiyosi/goneovim/util"
+	"github.com/beardnick/goneovim/util"
 	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/svg"

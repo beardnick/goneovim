@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	//"github.com/akiyosi/goneovim/filer"
-	//"github.com/akiyosi/goneovim/fuzzy"
-	"github.com/akiyosi/goneovim/util"
+	//"github.com/beardnick/goneovim/filer"
+	//"github.com/beardnick/goneovim/fuzzy"
+	"github.com/beardnick/goneovim/util"
 	shortpath "github.com/akiyosi/short_path"
 	"github.com/neovim/go-client/nvim"
 	"github.com/therecipe/qt/core"

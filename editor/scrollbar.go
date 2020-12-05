@@ -5,7 +5,7 @@ import (
 	"math"
 	"sync"
 
-	"github.com/akiyosi/goneovim/util"
+	"github.com/beardnick/goneovim/util"
 	"github.com/therecipe/qt/widgets"
 	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
