@@ -11,8 +11,8 @@ import (
 	"strings"
 	"sync"
 
-	frameless "github.com/akiyosi/goqtframelesswindow"
 	clipb "github.com/atotto/clipboard"
+	frameless "github.com/beardnick/goqtframelesswindow"
 	"github.com/jessevdk/go-flags"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/neovim/go-client/nvim"
