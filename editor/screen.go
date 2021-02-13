@@ -47,7 +47,6 @@ type HlChars struct {
 	bold   bool
 }
 
-
 // Cell is
 type Cell struct {
 	normalWidth bool
@@ -61,9 +60,9 @@ type Window struct {
 	paintMutex  sync.Mutex
 	redrawMutex sync.Mutex
 
-	s       *Screen
-	content    [][]*Cell
-	lenLine    []int
+	s             *Screen
+	content       [][]*Cell
+	lenLine       []int
 	lenContent    []int
 	lenOldContent []int
 	maxLenContent int
@@ -108,20 +107,20 @@ type Screen struct {
 	ws   *Workspace
 	font *Font
 
-	name   string
-	widget *widgets.QWidget
+	name    string
+	widget  *widgets.QWidget
 	windows sync.Map
 	width   int
 	height  int
 
-	cursor           [2]int
+	cursor [2]int
 
-	hlAttrDef    map[int]*Highlight
+	hlAttrDef      map[int]*Highlight
 	highlightGroup map[string]int
 
 	tooltip *widgets.QLabel
 
-	textCache       gcache.Cache
+	textCache gcache.Cache
 
 	resizeCount uint
 }
@@ -141,7 +140,7 @@ func newScreen() *Screen {
 		Build()
 
 	screen := &Screen{
-		widget: widget,
+		widget:         widget,
 		windows:        sync.Map{},
 		cursor:         [2]int{0, 0},
 		highlightGroup: make(map[string]int),
@@ -350,10 +349,12 @@ func (s *Screen) getWindow(grid int) (*Window, bool) {
 		return nil, false
 	}
 
+	fmt.Printf("getWin:caller:%s id: %d bufname:%s\n", util.CallerName(), grid, win.bufName)
 	return win, true
 }
 
 func (s *Screen) storeWindow(grid int, win *Window) {
+	fmt.Printf("storewin:id:%d bufname:%s\n", grid, win.bufName)
 	s.windows.Store(grid, win)
 }
 
@@ -745,7 +746,7 @@ func getCket(bra string) string {
 func (w *Window) drawIndentline(p *gui.QPainter, x int, y int) {
 	font := w.getFont()
 	X := float64(x) * font.truewidth
-	Y := float64(y * font.lineHeight)+float64(w.scrollDust[1])
+	Y := float64(y*font.lineHeight) + float64(w.scrollDust[1])
 	p.FillRect4(
 		core.NewQRectF4(
 			X,
@@ -806,13 +807,13 @@ func (w *Window) drawFloatWindowBorder(p *gui.QPainter) {
 		}
 	}
 
-	width  := float64(w.widget.Width())
+	width := float64(w.widget.Width())
 	height := float64(w.widget.Height())
 
-	left :=   core.NewQRectF4(      0,        0,      1, height)
-	top :=    core.NewQRectF4(      0,        0,  width,      1)
-	right :=  core.NewQRectF4(width-1,        0,      1, height)
-	bottom := core.NewQRectF4(      0, height-1,  width,      1)
+	left := core.NewQRectF4(0, 0, 1, height)
+	top := core.NewQRectF4(0, 0, width, 1)
+	right := core.NewQRectF4(width-1, 0, 1, height)
+	bottom := core.NewQRectF4(0, height-1, width, 1)
 
 	p.FillRect4(
 		left,
@@ -976,12 +977,12 @@ func (win *Window) wheelEvent(event *gui.QWheelEvent) {
 
 	if (v == 0 || h == 0) && isStopScroll {
 		vert, horiz = win.smoothUpdate(v, h, isStopScroll)
-	} else if (v != 0 || h != 0) {
+	} else if v != 0 || h != 0 {
 		// If Scrolling has ended, reset the displacement of the line
 		vert, horiz = win.smoothUpdate(v, h, isStopScroll)
 	} else {
 
-		vert =  angles.Y()
+		vert = angles.Y()
 		horiz = angles.X()
 		// Scroll per 1 line
 		if math.Abs(float64(vert)) > 1 {
@@ -1012,7 +1013,7 @@ func (win *Window) wheelEvent(event *gui.QWheelEvent) {
 		var err error
 		go func() {
 			err = win.s.ws.nvim.SetCurrentWindow(win.id)
-			errCh <-err
+			errCh <- err
 		}()
 
 		select {
@@ -1020,7 +1021,6 @@ func (win *Window) wheelEvent(event *gui.QWheelEvent) {
 		case <-time.After(40 * time.Millisecond):
 		}
 	}
-
 
 	mod := event.Modifiers()
 
@@ -1037,7 +1037,7 @@ func (win *Window) wheelEvent(event *gui.QWheelEvent) {
 	}
 
 	// Do not scroll horizontal if vertical scroll amount is greater than horizontal that
-	if math.Abs(float64(vert)) * 6 > math.Abs(float64(horiz)) {
+	if math.Abs(float64(vert))*6 > math.Abs(float64(horiz)) {
 		return
 	}
 
@@ -1127,7 +1127,7 @@ func (s *Screen) mousePressEvent(event *gui.QMouseEvent) {
 	widget := widgets.NewQWidget(nil, 0)
 	widget.SetStyleSheet(" * { background-color: rgba(0, 0, 0, 0);}")
 	widget.SetParent(win.widget)
-	widget.SetFixedSize2(font.lineHeight * 4 / 3, font.lineHeight * 4 / 3)
+	widget.SetFixedSize2(font.lineHeight*4/3, font.lineHeight*4/3)
 	widget.Show()
 	widget.ConnectPaintEvent(func(e *gui.QPaintEvent) {
 		p := gui.NewQPainter2(widget)
@@ -1138,7 +1138,7 @@ func (s *Screen) mousePressEvent(event *gui.QMouseEvent) {
 		x := float64(font.lineHeight * 2 / 3)
 		y := float64(font.lineHeight * 2 / 3)
 		r := float64(font.lineHeight * 2 / 3)
-		point := core.NewQPointF3(x,y)
+		point := core.NewQPointF3(x, y)
 
 		rgbAccent = newRGBA(rgbAccent.R, rgbAccent.G, rgbAccent.B, 0.1)
 		p.SetBrush(gui.NewQBrush3(rgbAccent.QColor(), core.Qt__SolidPattern))
@@ -1187,8 +1187,8 @@ func (s *Screen) mousePressEvent(event *gui.QMouseEvent) {
 		p.DestroyQPainter()
 	})
 	widget.Move2(
-		event.Pos().X() - font.lineHeight * 2 / 3 - 1,
-		event.Pos().Y() - font.lineHeight * 2 / 3 - 1,
+		event.Pos().X()-font.lineHeight*2/3-1,
+		event.Pos().Y()-font.lineHeight*2/3-1,
 	)
 
 	eff := widgets.NewQGraphicsOpacityEffect(widget)
@@ -1869,10 +1869,10 @@ func (w *Window) updateLine(col, row int, cells []interface{}) {
 
 func (w *Window) countContent(row int) {
 	line := w.content[row]
-	lenLine := w.cols-1
-	width := w.cols-1
+	lenLine := w.cols - 1
+	width := w.cols - 1
 	var breakFlag [2]bool
-	for j := w.cols-1; j >= 0; j-- {
+	for j := w.cols - 1; j >= 0; j-- {
 		cell := line[j]
 
 		if !breakFlag[0] {
@@ -2083,8 +2083,8 @@ func (w *Window) update() {
 
 		w.widget.Update2(
 			0,
-			i * font.lineHeight,
-			int(float64(width) * font.truewidth),
+			i*font.lineHeight,
+			int(float64(width)*font.truewidth),
 			font.lineHeight,
 		)
 	}
@@ -2854,7 +2854,7 @@ func (s *Screen) msgSetPos(args []interface{}) {
 		win.pos[1] = msgCount
 		win.move(win.pos[0], win.pos[1])
 		win.show()
-		win.widget.Raise()  // Fix #111
+		win.widget.Raise() // Fix #111
 
 	}
 }

@@ -10,10 +10,10 @@ import (
 	"sync"
 	"time"
 
+	shortpath "github.com/akiyosi/short_path"
 	//"github.com/beardnick/goneovim/filer"
 	//"github.com/beardnick/goneovim/fuzzy"
 	"github.com/beardnick/goneovim/util"
-	shortpath "github.com/akiyosi/short_path"
 	"github.com/neovim/go-client/nvim"
 	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
@@ -409,6 +409,7 @@ func (w *Workspace) initGonvim() {
 	au GonvimAuMd TextChanged,TextChangedI *.md call rpcnotify(0, "Gui", "gonvim_markdown_update")
 	au GonvimAuMd BufEnter *.md call rpcnotify(0, "Gui", "gonvim_markdown_new_buffer")
 	`
+	// #note:  GonvimAuMd invoke new markdown buffer
 	if !w.uiRemoteAttached {
 		gonvimAutoCmds = gonvimAutoCmds + `
 		aug GonvimAuMinimap | au! | aug END
@@ -742,11 +743,13 @@ func (e *Editor) updateNotificationPos() {
 	e.notifications = newNotifications
 }
 
+// #note: most important display func
 func (w *Workspace) handleRedraw(updates [][]interface{}) {
 	s := w.screen
 	for _, update := range updates {
 		event := update[0].(string)
 		args := update[1:]
+		fmt.Println("event:", event)
 		switch event {
 
 		// Global Events
@@ -1125,6 +1128,7 @@ func (w *Workspace) updateMinimap() {
 
 func (w *Workspace) handleRPCGui(updates []interface{}) {
 	event := updates[0].(string)
+	fmt.Println("rpc event:", event)
 	switch event {
 	case "gonvim_enter":
 		editor.window.SetWindowOpacity(1.0)

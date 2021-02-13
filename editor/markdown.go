@@ -124,6 +124,7 @@ func (m *Markdown) wheelEvent(event *gui.QWheelEvent) {
 	event.Accept()
 }
 
+// #note: real show markdown
 func (m *Markdown) updatePos() {
 	// for _, win := range m.ws.screen.windows {
 	// 	if win == nil {
@@ -144,6 +145,7 @@ func (m *Markdown) updatePos() {
 	// 		return
 	// 	}
 	// }
+	fmt.Println("updatePos")
 	needHide := true
 	m.ws.screen.windows.Range(func(_, winITF interface{}) bool {
 		win := winITF.(*Window)
@@ -155,12 +157,22 @@ func (m *Markdown) updatePos() {
 			return true
 		}
 		if filepath.Base(win.bufName) == GonvimMarkdownBufName {
+			fmt.Println("markdown before show")
 			if !m.webview.IsVisible() {
+
+				//m.webview.Resize2(
+				//	int(float64(win.cols)*m.ws.font.truewidth),
+				//	win.rows*m.ws.font.lineHeight,
+				//)
+
 				m.webview.Resize2(
-					int(float64(win.cols)*m.ws.font.truewidth),
-					win.rows*m.ws.font.lineHeight,
+					win.widget.Width(),
+					win.widget.Height(),
 				)
+
+				// #impo:keypoint webview parent is set, so show the window will show the webview
 				m.webview.SetParent(win.widget)
+				fmt.Println("markdown show")
 				m.show()
 			}
 			needHide = false
@@ -249,11 +261,15 @@ func (m *Markdown) toggle() {
 		if win.isMsgGrid || win.isFloatWin {
 			return true
 		}
+		// #note: range
+		// 1. if markdown buffer exists attach and close it
+		// markdown buffer will always exists, so just update it
 		if filepath.Base(win.bufName) == GonvimMarkdownBufName {
 			m.htmlSet = false
 			m.hide()
 			go func() {
 				m.ws.nvim.SetCurrentWindow(win.id)
+				fmt.Println("markdown close")
 				m.ws.nvim.Command("close")
 			}()
 			return false
